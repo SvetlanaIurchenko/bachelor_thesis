@@ -1,0 +1,14 @@
+numpy
+pandas
+matplotlib
+elephant
+scipy
+plotly
+pyabf
+pybaselines
+seaborn
+statistics
+tqdm
+loguru
+fastapi
+uvicorn
