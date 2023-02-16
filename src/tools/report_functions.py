@@ -50,12 +50,12 @@ def baseline_report(signal, signal_features):
     baseline_param["series"] = baseline_param.sweep_indx.apply(
         sweep_seria_correspondence_fun
     )
-    baseline_param.to_csv(signal.report_folder / "_baseline_param.csv", index=True)
+    baseline_param.to_csv(signal.report_folder / "baseline_param.csv", index=True)
 
 
 def tonic_cur_report(signal, signal_features):
     ton_cur = pd.DataFrame(signal_features.tonic_cur, columns=["Iton, pA"])
-    ton_cur.to_csv(signal.report_folder / "_tonic_cur.csv", index=True)
+    ton_cur.to_csv(signal.report_folder / "tonic_cur.csv", index=True)
 
 
 def make_result_feature_table(signal, signal_features):
@@ -155,5 +155,6 @@ def make_result_table_spont_freq(signal, signal_features):
         spont_freqs[l]["series"] = [k] * len(spont_freqs[l])
 
     spont_freq = pd.concat([spont_freqs[l] for l in range(len(spont_freqs))]).reset_index(drop=True)
-    spont_freq.to_csv(signal.report_folder / "spont_freqs.csv", index=True)
-    return spont_freq
+    spont_freq_ = spont_freq[spont_freq['series'] != 'PTX']
+    spont_freq_.to_csv(signal.report_folder / "spont_freqs.csv", index=True)
+    return spont_freq_

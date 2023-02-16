@@ -29,7 +29,6 @@ def make_report(signal, signal_features):
         **{
             "xlabel": "Time, s",
             "ylabel": "R_in, MOhm",
-            "ylim": (0, 1200),
             "plotname": "rin",
         }
     )
@@ -55,19 +54,28 @@ def make_report(signal, signal_features):
         signal_features,
         **{"xlabel": "Time, s", "ylabel": "Rise rate, pA/ms", "plotname": "riserate"}
     )
+    plot_electric_params(
+        signal_features.freqs,
+        signal,
+        signal_features,
+        **{
+            "xlabel": "Time, s",
+            "ylabel": "Freq, Hz",
+            "plotname": "frequency",
+        }
+    )
+
 
     tonic_cur_report(signal=signal, signal_features=signal_features)
     electrical_param_table(signal=signal, signal_features=signal_features)
     baseline_report(signal=signal, signal_features=signal_features)
 
     result = make_result_feature_table(signal=signal, signal_features=signal_features)
-    spont_freq = make_result_table_spont_freq(signal=signal, signal_features=signal_features)
-
-    print(spont_freq)
+    spont_freq_ = make_result_table_spont_freq(signal=signal, signal_features=signal_features)
 
     box_plot(
         signal=signal,
-        data=spont_freq,
+        data=spont_freq_,
         y="spont_freq",
         **{"title": "Spont freqs", "ylabel": "Spont freq, Hz", "plotname": "spont freq"}
     )
@@ -82,7 +90,7 @@ def make_report(signal, signal_features):
     plt_cumulative_distribution(
         column=['amplitudes', 'tau_decay', 'rise_rate_10_90', 'spont_freq'],
         llabel=['log(amplitude), log(pA)', 'log(tau decay), log(ms)','log(rise rate), log(pA/ms)', 'log(spont freq), log(Hz)'],
-        spont_freq=spont_freq, res=result, signal=signal, signal_features=signal_features
+        spont_freq=spont_freq_, res=result, signal=signal, signal_features=signal_features
     )
 
     logger.info("Plotting cumulative distributions.")

@@ -53,7 +53,7 @@ class SignalFeatures:
 
     def save_baseline_to_csv(self, signal, baseline):
         baseline_export = pd.DataFrame(baseline[0], columns=["I, pA"])
-        baseline_export.to_csv(signal.report_folder / "_baseline.csv", index=True)
+        baseline_export.to_csv(signal.report_folder / "baseline.csv", index=True)
 
     def make_corrected_signal(self, signal, baseline):
         logger.info("Corrected signal calculation started.")
