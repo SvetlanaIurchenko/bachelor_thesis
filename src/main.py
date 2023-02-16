@@ -29,7 +29,6 @@ class GroupAnalysisRequest(BaseModel):
 class RecordingAnalysisRequest(BaseModel):
     colors: typing.Dict[str, typing.Tuple[int, ...]]
 
-
 STEP = (5, 0.1, 0.7)  # voltage, start, stop
 COLORS = {
     "CTRL": (0, 30, "green"),

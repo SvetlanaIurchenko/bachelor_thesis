@@ -11,6 +11,7 @@ from src.visualization.plots import (
     plt_event_param,
     box_plot,
     plt_box_plot,
+    plt_cumulative_distribution,
 )
 
 
@@ -76,4 +77,10 @@ def make_report(signal, signal_features):
         lparametres=["amplitudes, pA", "tau_decay, sec", "rise_rate_10_90, pA/ms"],
         res=result,
         signal=signal,
+    )
+
+    plt_cumulative_distribution(
+        column=['amplitudes', 'tau_decay', 'rise_rate_10_90', 'spont_freq'],
+        llabel=['log(amplitude), log(pA)', 'log(tau decay), log(ms)','log(rise rate), log(pA/ms)', 'log(spont freq), log(Hz)'],
+        spont_freq=spont_freq, res=result, signal=signal, signal_features=signal_features
     )
