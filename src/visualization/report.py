@@ -62,6 +62,8 @@ def make_report(signal, signal_features):
     result = make_result_feature_table(signal=signal, signal_features=signal_features)
     spont_freq = make_result_table_spont_freq(signal=signal, signal_features=signal_features)
 
+    print(spont_freq)
+
     box_plot(
         signal=signal,
         data=spont_freq,

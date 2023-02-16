@@ -37,7 +37,12 @@ COLORS = {
     "GABA5": (100, 118, "navy"),
     "PTX": (162, 198, "red"),
 }
-
+# COLORS = {
+#     "CTRL": [0, 30],
+#     "GABA1": [54, 72],
+#     "GABA5": [100, 118],
+#     "PTX": [162, 198]
+# }
 
 def recording_analysis(filename, colors):
     signal = Signal(filename=filename, step=STEP)
@@ -66,8 +71,12 @@ def electrophysiology_recording_analysis(file: UploadFile):
 
 def build_common_statistic(report_folder, files, colors):
     electric_parameters_group_common_statistic(report_folder, files, colors)
+    logger.info("Electric cell parameters common statistic is creating.")
     baseline_analysis_group_common_statistic(report_folder, files, colors)
+    logger.info("Baseline parameters common statistic is creating.")
     event_parameters_group_common_statistic(report_folder, files, colors)
+    logger.info("Event parameters common statistic is creating.")
+    logger.info("Pipeline finished successfully.")
 
 @app.post("/group_analysis/")
 def group_analysis(group_request: GroupAnalysisRequest):
