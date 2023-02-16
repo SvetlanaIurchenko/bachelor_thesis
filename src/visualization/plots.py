@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-import logging
-
+from loguru import logger
 
 def plot_electric_params(r_dict, signal, signal_features, **kwargs):
     fig, ax = plt.subplots(1, figsize=(19, 7))
@@ -81,7 +80,7 @@ def plt_event_param(feature, signal, signal_features, **kwargs):
 
 
 def box_plot(signal, data, y, **kwargs):
-    logging.info("Box plotting.")
+    logger.info("Box plotting.")
     plt.figure(figsize=(10, 10))
     ax = sns.boxplot(
         x="series",
@@ -111,7 +110,7 @@ def plt_box_plot(parametres, lparametres, res, signal):
 def plt_cumulative_distribution(
     column, llabel, spont_freq, res, signal, signal_features
 ):
-    logging.info("Plotting cumulative distributions.")
+    logger.info("Plotting cumulative distributions.")
     for c, l in zip(column, llabel):
         if c == "spont_freq":
             fig, ax = plt.subplots(1, figsize=(10, 7))

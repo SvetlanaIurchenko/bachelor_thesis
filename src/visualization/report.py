@@ -13,7 +13,7 @@ from src.visualization.plots import (
     plt_box_plot,
     plt_cumulative_distribution,
 )
-
+from loguru import logger
 
 def make_report(signal, signal_features):
     plot_electric_params(
@@ -84,3 +84,7 @@ def make_report(signal, signal_features):
         llabel=['log(amplitude), log(pA)', 'log(tau decay), log(ms)','log(rise rate), log(pA/ms)', 'log(spont freq), log(Hz)'],
         spont_freq=spont_freq, res=result, signal=signal, signal_features=signal_features
     )
+
+    logger.info("Plotting cumulative distributions.")
+
+
