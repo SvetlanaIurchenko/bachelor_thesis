@@ -105,7 +105,7 @@ def make_result_feature_table(signal, signal_features):
     event_param_gaba5 = event_param[event_param["series"] == "GABA5"]
 
     frames = [event_param_ctrl, event_param_gaba1, event_param_gaba5]
-    res = pd.concat(frames)  # without picro
+    res = pd.concat(frames).reset_index(drop=True)  # without picro
 
     res.to_csv(signal.report_folder / "event_param_3_series.csv", index=True)
     return res
@@ -154,6 +154,6 @@ def make_result_table_spont_freq(signal, signal_features):
         )
         spont_freqs[l]["series"] = [k] * len(spont_freqs[l])
 
-    spont_freq = pd.concat([spont_freqs[l] for l in range(len(spont_freqs))])
+    spont_freq = pd.concat([spont_freqs[l] for l in range(len(spont_freqs))]).reset_index(drop=True)
     spont_freq.to_csv(signal.report_folder / "spont_freqs.csv", index=True)
     return spont_freq
