@@ -20,7 +20,7 @@ def make_report(signal, signal_features):
         signal_features.r_s_dict,
         signal,
         signal_features,
-        **{"xlabel": "Time, s", "ylabel": "R_s, MOhm", "plotname": "rs"}
+        **{"xlabel": "Time, s", "ylabel": "R_s, MOhm", "plotname": "series resistance"}
     )
     plot_electric_params(
         signal_features.r_in_dict,
@@ -29,30 +29,32 @@ def make_report(signal, signal_features):
         **{
             "xlabel": "Time, s",
             "ylabel": "R_in, MOhm",
-            "plotname": "rin",
+            "ylim": (0, 2000),
+            "plotname": "input resistance",
+
         }
     )
 
-    plt_I_hold(signal, signal_features, is_noise=False, **{"plotname": "Ihold"})
-    plt_I_hold(signal, signal_features, is_noise=True, **{"plotname": "Inoise"})
+    plt_I_hold(signal, signal_features, is_noise=False, **{"plotname": "holding current"})
+    plt_I_hold(signal, signal_features, is_noise=True, **{"plotname": "holding current noise"})
 
     plt_event_param(
         signal_features.ampls_spks_pos,
         signal,
         signal_features,
-        **{"xlabel": "Time, s", "ylabel": "Amplitude, pA", "plotname": "ampl"}
+        **{"xlabel": "Time, s", "ylabel": "Amplitude, pA", "plotname": "amplitude"}
     )
     plt_event_param(
         signal_features.tau_decay,
         signal,
         signal_features,
-        **{"xlabel": "Time, s", "ylabel": "Tau decay, ms", "plotname": "taudec"}
+        **{"xlabel": "Time, s", "ylabel": "Tau decay, ms", "plotname": "tau decay"}
     )
     plt_event_param(
         signal_features.rise_rate,
         signal,
         signal_features,
-        **{"xlabel": "Time, s", "ylabel": "Rise rate, pA/ms", "plotname": "riserate"}
+        **{"xlabel": "Time, s", "ylabel": "Rise rate, pA/ms", "plotname": "rise rate"}
     )
     plot_electric_params(
         signal_features.freqs,
@@ -82,7 +84,7 @@ def make_report(signal, signal_features):
 
     plt_box_plot(
         parametres=["amplitudes", "tau_decay", "rise_rate_10_90"],
-        lparametres=["amplitudes, pA", "tau_decay, sec", "rise_rate_10_90, pA/ms"],
+        lparametres=["amplitudes, pA", "tau_decay, ms", "rise_rate_10_90, pA/ms"],
         res=result,
         signal=signal,
     )

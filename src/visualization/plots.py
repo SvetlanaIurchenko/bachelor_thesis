@@ -21,8 +21,8 @@ def plot_electric_params(r_dict, signal, signal_features, **kwargs):
     plt.ylim(kwargs.get("ylim"))
     plt.legend(fontsize=20)
     if kwargs.get("plotname"):
-        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
-        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.pdf")
+        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.png")
+        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.pdf")
     plt.close()
 
 
@@ -43,8 +43,8 @@ def plt_I_hold(signal, signal_features, is_noise=False, **kwargs):
     plt.xlabel("Time, s", fontdict={"fontsize": 20})
     plt.ylabel("I_hold, pA", fontdict={"fontsize": 20})
     plt.legend(fontsize=20)
-    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
-    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
+    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.png")
+    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.png")
     plt.close()
 
 
@@ -75,8 +75,8 @@ def plt_event_param(feature, signal, signal_features, **kwargs):
     plt.ylim(kwargs.get("ylim"))
     plt.legend(fontsize=20)
     if kwargs.get("plotname"):
-        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
-        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.pdf")
+        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.png")
+        plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} time_dynamics.pdf")
     plt.close()
 
 
@@ -97,8 +97,8 @@ def box_plot(signal, data, y, **kwargs):
     add_median_labels(ax)
     plt.xticks(fontsize=15, rotation=0)
     plt.yticks(fontsize=15, rotation=0)
-    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
-    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
+    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} box plot.png")
+    plt.savefig(signal.report_folder / f"{kwargs.get('plotname')} box plot.png")
     plt.close()
 
 
@@ -146,6 +146,6 @@ def plt_cumulative_distribution(
         plt.ylabel("p", fontdict={"fontsize": 20})
         plt.xlabel(f"{l}", fontdict={"fontsize": 20})
         plt.legend(fontsize=20)
-        plt.savefig(signal.report_folder / f"{c}.png")
-        plt.savefig(signal.report_folder / f"{c}.pdf")
+        plt.savefig(signal.report_folder / f"{c} cumulative distribution.png")
+        plt.savefig(signal.report_folder / f"{c} cumulative distribution.pdf")
         plt.close()
