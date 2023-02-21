@@ -10,7 +10,6 @@ from src.visualization.common_statistic import *
 
 from src.data.signal_model import Signal
 from src.features.signal_features import SignalFeatures
-from src.tools.build_common_statistic_function import read_electric_cell_parameters
 from src.visualization.report import make_report
 import warnings
 warnings.filterwarnings("ignore")

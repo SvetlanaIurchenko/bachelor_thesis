@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from loguru import logger
+from src.tools.build_common_statistic_function import add_median_labels
 
 def plot_electric_params(r_dict, signal, signal_features, **kwargs):
     fig, ax = plt.subplots(1, figsize=(19, 7))
@@ -93,6 +94,7 @@ def box_plot(signal, data, y, **kwargs):
     ax.set_title(f"{kwargs.get('title')}", fontsize=18)
     ax.set_xlabel("series", fontsize=16)
     ax.set_ylabel(f"{kwargs.get('ylabel')}", fontsize=16)
+    add_median_labels(ax)
     plt.xticks(fontsize=15, rotation=0)
     plt.yticks(fontsize=15, rotation=0)
     plt.savefig(signal.report_folder / f"{kwargs.get('plotname')}.png")
