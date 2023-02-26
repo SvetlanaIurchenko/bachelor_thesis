@@ -337,7 +337,7 @@ class SignalFeatures:
         }
 
         spont_freqs = {
-            k: 1 / elephant.statistics.isi(new_spike_train_ind[k])
+            k: 1 / elephant.statistics.isi(new_spike_train_ind[k]) * signal.sampling_rate
             for k in range(signal.sweep_number)
         }
         return freqs, spont_freqs
