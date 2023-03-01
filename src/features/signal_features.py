@@ -181,9 +181,10 @@ class SignalFeatures:
                 a = block1.segments[0].time_slice(
                     (i * signal.sweep_length + 0.7) * pq.s, reset_time=False
                 )
+            percentile = np.percentile(corrected_signal, 2.1)
             Train_times = elephant.spike_train_generation.peak_detection(
                 a.analogsignals[0],
-                threshold=-sigma * 5 * pq.pA,
+                threshold=sigma * np.round(percentile/sigma) * pq.pA,
                 sign="below",
                 as_array=True,
             )
@@ -213,8 +214,9 @@ class SignalFeatures:
                 a = corrected_signal_neo.time_slice(
                     (i * signal.sweep_length + 0.7) * pq.s, None
                 )
+            percentile = np.percentile(corrected_signal, 2.1)
             Train_times = elephant.spike_train_generation.peak_detection(
-                a, threshold=-sigma * 5 * pq.pA, sign="below", as_array=True
+                a, threshold=-sigma * np.round(percentile/sigma) * pq.pA, sign="below", as_array=True
             )
             events_times_cor[i] = Train_times[:-1]
 
@@ -234,7 +236,8 @@ class SignalFeatures:
                     bel = events_inds_cor[k][i]
                     if bel > rel:
                         spike_train_ind[k].append(prevbel)
-                        prev_ind = i - 1
+                        prev_ind = i
+                        prevbel = bel
                         break
                     prevbel = bel
 
@@ -321,10 +324,15 @@ class SignalFeatures:
                     new_spike_train_ind[k].append(spike_train_ind[k][i])
                 else:
                     continue
-        return new_spike_train_ind
+
+        new_spike_train_ind_array = []
+        for k in new_spike_train_ind.keys():
+            for el in new_spike_train_ind[k]:
+                new_spike_train_ind_array.append(el)
+        return new_spike_train_ind, new_spike_train_ind_array
 
     def frequency(
-        self, signal, new_spike_train_ind, corrected_signal_sweeps_no_res_part
+        self, signal, new_spike_train_ind, new_spike_train_ind_array, corrected_signal_sweeps_no_res_part
     ):
         logger.info("Frequencies calculation.")
         time_len_sweeps = {
@@ -336,10 +344,21 @@ class SignalFeatures:
             for k in range(signal.sweep_number)
         }
 
-        spont_freqs = {
-            k: 1 / elephant.statistics.isi(new_spike_train_ind[k]) * signal.sampling_rate
-            for k in range(signal.sweep_number)
-        }
+        # spont_freqs = {
+        #     k: 1 / elephant.statistics.isi(new_spike_train_ind[k]) * signal.sampling_rate
+        #     for k in range(signal.sweep_number)
+        # }
+        spont_freqs_array = 1 / elephant.statistics.isi(new_spike_train_ind_array) * signal.sampling_rate
+
+        spont_freqs = {k: [] for k in range(signal.sweep_number)}
+        sweep_boundaries = {k: [int(k * signal.sweep_length * signal.sampling_rate), int((k + 1) * signal.sweep_length * signal.sampling_rate)] for k
+                            in range(signal.sweep_number)}
+        for k in sweep_boundaries.keys():
+            for l in range(len(new_spike_train_ind_array) - 1):
+                if sweep_boundaries[k][0] <= new_spike_train_ind_array[l] <= sweep_boundaries[k][1]:
+                    spont_freqs[k].append(spont_freqs_array[l])
+                else:
+                    pass
         return freqs, spont_freqs
 
     def amplitude(self, signal, corrected_signal, new_spike_train_ind):
@@ -501,14 +520,15 @@ class SignalFeatures:
             filtered_signal=filtered_signal,
             baseline=self.baseline,
         )
-        self.new_spike_train_ind = self.spike_selection(
+        self.new_spike_train_ind, self.new_spike_train_ind_array = self.spike_selection(
             corrected_signal=self.corrected_signal,
             signal=self.signal,
             spike_train_ind=spike_train_ind,
         )
-        self.freqs, self.spont_freq = self.frequency(
+        self.freqs, self.spont_freqs = self.frequency(
             signal=self.signal,
             new_spike_train_ind=self.new_spike_train_ind,
+            new_spike_train_ind_array=self.new_spike_train_ind_array,
             corrected_signal_sweeps_no_res_part=corrected_signal_sweeps_no_res_part,
         )
         self.ampls_spks_pos, self.SpikeTrainTimes, ampls_spks = self.amplitude(

@@ -110,7 +110,7 @@ def plt_box_plot(parametres, lparametres, res, signal):
 
 
 def plt_cumulative_distribution(
-    column, llabel, spont_freq, res, signal, signal_features
+    column, llabel, spont_freq_, res, signal, signal_features
 ):
     logger.info("Plotting cumulative distributions.")
     for c, l in zip(column, llabel):
@@ -118,7 +118,7 @@ def plt_cumulative_distribution(
             fig, ax = plt.subplots(1, figsize=(10, 7))
             for k in signal_features.colors.keys():
                 count, bins_count = np.histogram(
-                    np.array(spont_freq[spont_freq["series"] == k][c]), bins=50
+                    np.array(spont_freq_[spont_freq_["series"] == k][c]), bins=50
                 )
                 pdf = count / sum(count)
                 cdf = np.cumsum(pdf)

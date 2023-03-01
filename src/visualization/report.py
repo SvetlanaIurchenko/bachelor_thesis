@@ -92,7 +92,7 @@ def make_report(signal, signal_features):
     plt_cumulative_distribution(
         column=['amplitudes', 'tau_decay', 'rise_rate_10_90', 'spont_freq'],
         llabel=['log(amplitude), log(pA)', 'log(tau decay), log(ms)','log(rise rate), log(pA/ms)', 'log(spont freq), log(Hz)'],
-        spont_freq=spont_freq_, res=result, signal=signal, signal_features=signal_features
+        spont_freq_=spont_freq_, res=result, signal=signal, signal_features=signal_features
     )
 
     logger.info("Plotting cumulative distributions.")

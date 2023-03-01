@@ -113,7 +113,7 @@ def make_result_feature_table(signal, signal_features):
 
 def make_result_table_spont_freq(signal, signal_features):
     spont_frequencies = pd.DataFrame.from_dict(
-        signal_features.spont_freq, orient="index"
+        signal_features.new_spont_freq, orient="index"
     )
     spont_frequencies["sweep"] = signal_features.spont_freq.keys()
 
